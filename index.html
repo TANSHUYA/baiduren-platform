@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>万象摆渡人 - 素质教育型家教平台</title>
+    <title>万象摆渡人 - 大学生与小学生的双向成长平台</title>
     <script src="https://cdn.tailwindcss.com/3.3.3"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #f8fafc;
@@ -15,9 +16,9 @@
         }
         
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
         }
@@ -28,13 +29,21 @@
         
         .card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 28px 0 rgba(30, 136, 229, 0.15);
+            box-shadow: 0 12px 28px 0 rgba(31, 38, 135, 0.15);
         }
         
-        .chart-container {
-            height: 320px;
-            width: 100%;
-            position: relative;
+        .mbti-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
         }
         
         .highlight-text {
@@ -49,30 +58,8 @@
             left: 0;
             width: 100%;
             height: 8px;
-            background-color: rgba(30, 136, 229, 0.2);
+            background-color: rgba(59, 130, 246, 0.2);
             z-index: -1;
-        }
-        
-        .bg-gradient-primary {
-            background: linear-gradient(135deg, #1E88E5 0%, #0D47A1 100%);
-        }
-        
-        .bg-gradient-secondary {
-            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
-        }
-        
-        .shadow-glow {
-            box-shadow: 0 10px 25px -5px rgba(30, 136, 229, 0.3);
-        }
-        
-        .mbti-tag {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 6px;
-            margin-bottom: 6px;
         }
         
         .mobile-menu {
@@ -99,37 +86,37 @@
             opacity: 1;
         }
         
-        .blob {
-            position: absolute;
-            background: linear-gradient(135deg, #1E88E5 0%, #4CAF50 100%);
-            filter: blur(60px);
-            opacity: 0.1;
-            border-radius: 50%;
-            z-index: -1;
-        }
-        
-        .radar-chart-container {
-            width: 100%;
-            height: 300px;
-        }
+        .mbti-color-INTJ { background-color: #4f46e5; color: white; }
+        .mbti-color-INTP { background-color: #6366f1; color: white; }
+        .mbti-color-ENTJ { background-color: #7c3aed; color: white; }
+        .mbti-color-ENTP { background-color: #8b5cf6; color: white; }
+        .mbti-color-INFJ { background-color: #10b981; color: white; }
+        .mbti-color-INFP { background-color: #34d399; color: white; }
+        .mbti-color-ENFJ { background-color: #059669; color: white; }
+        .mbti-color-ENFP { background-color: #10b981; color: white; }
+        .mbti-color-ISTJ { background-color: #64748b; color: white; }
+        .mbti-color-ISFJ { background-color: #94a3b8; color: white; }
+        .mbti-color-ESTJ { background-color: #475569; color: white; }
+        .mbti-color-ESFJ { background-color: #64748b; color: white; }
+        .mbti-color-ISTP { background-color: #f59e0b; color: white; }
+        .mbti-color-ISFP { background-color: #f97316; color: white; }
+        .mbti-color-ESTP { background-color: #f59e0b; color: white; }
+        .mbti-color-ESFP { background-color: #f97316; color: white; }
     </style>
 </head>
 <body class="min-h-screen">
-    <div class="blob w-96 h-96 top-0 left-0"></div>
-    <div class="blob w-80 h-80 bottom-0 right-0"></div>
-
-    <!-- 导航条 -->
-    <nav class="glassmorphism sticky top-0 z-50 p-4 mb-8" id="mainNav">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 p-4">
         <div class="container mx-auto flex items-center justify-between">
-            <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-orange-500 text-transparent bg-clip-text">
-                <i class="fas fa-child-reaching mr-2"></i>万象摆渡人
+            <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                <i class="fas fa-bridge mr-2"></i>万象摆渡人
             </div>
             <div class="hidden md:flex space-x-6">
-                <a href="#home" class="text-gray-600 hover:text-blue-600 transition-colors">首页</a>
-                <a href="#find-teacher" class="text-gray-600 hover:text-blue-600 transition-colors">找家教</a>
-                <a href="#join-us" class="text-gray-600 hover:text-blue-600 transition-colors">加入我们</a>
-                <a href="#student-center" class="text-gray-600 hover:text-blue-600 transition-colors">学生成长</a>
-                <a href="#activities" class="text-gray-600 hover:text-blue-600 transition-colors">教学活动</a>
+                <a href="#features" class="text-blue-600 hover:text-blue-800 transition-colors">平台特色</a>
+                <a href="#parents" class="text-gray-600 hover:text-blue-600 transition-colors">家长入口</a>
+                <a href="#students" class="text-gray-600 hover:text-blue-600 transition-colors">学生入口</a>
+                <a href="#teach" class="text-gray-600 hover:text-blue-600 transition-colors">成为家教</a>
+                <a href="#community" class="text-gray-600 hover:text-blue-600 transition-colors">社区互动</a>
             </div>
             <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
                 <i class="fas fa-bars"></i>
@@ -137,711 +124,472 @@
 
             <!-- 移动端导航菜单 -->
             <div class="mobile-menu md:hidden" id="mobileMenu">
-                <a href="#home" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-home mr-3 text-blue-500"></i>首页
+                <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <i class="fas fa-star mr-3 text-blue-500"></i>平台特色
                 </a>
-                <a href="#find-teacher" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-chalkboard-user mr-3 text-blue-500"></i>找家教
+                <a href="#parents" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <i class="fas fa-user-friends mr-3 text-blue-500"></i>家长入口
                 </a>
-                <a href="#join-us" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-user-graduate mr-3 text-blue-500"></i>加入我们
+                <a href="#students" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <i class="fas fa-user-graduate mr-3 text-blue-500"></i>学生入口
                 </a>
-                <a href="#student-center" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-star mr-3 text-blue-500"></i>学生成长
+                <a href="#teach" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <i class="fas fa-chalkboard-teacher mr-3 text-blue-500"></i>成为家教
                 </a>
-                <a href="#activities" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-calendar-alt mr-3 text-blue-500"></i>教学活动
+                <a href="#community" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <i class="fas fa-users mr-3 text-blue-500"></i>社区互动
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- 首页 -->
-    <section id="home" class="container mx-auto py-12 px-4 md:px-8">
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                <span class="bg-gradient-to-r from-blue-600 to-orange-500 text-transparent bg-clip-text">万象摆渡人</span>
-            </h1>
-            <p class="text-xl text-gray-600 mb-8">大学生与小学生的双向成长平台</p>
-            <p class="text-2xl font-semibold mb-8">重新定义家教：不只是辅导，而是成长陪伴</p>
+    <!-- 顶部Banner区域 -->
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-600 py-16 text-white">
+        <div class="container mx-auto px-4 md:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">万象摆渡人</h1>
+            <p class="text-xl md:text-2xl mb-8">大学生与小学生的双向成长平台</p>
+            <p class="text-lg mb-12 max-w-3xl mx-auto">基于AI与MBTI的智能匹配，结合多场景教学与兴趣激励</p>
             
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <div class="glassmorphism p-4 w-48 card-hover">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mx-auto mb-3">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3 class="font-semibold mb-1">精准匹配</h3>
-                    <p class="text-sm text-gray-600">基于MBTI与兴趣的智能推荐</p>
-                </div>
-                <div class="glassmorphism p-4 w-48 card-hover">
-                    <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mx-auto mb-3">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3 class="font-semibold mb-1">兴趣培养</h3>
-                    <p class="text-sm text-gray-600">多元化素质教育内容</p>
-                </div>
-                <div class="glassmorphism p-4 w-48 card-hover">
-                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mx-auto mb-3">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </div>
-                    <h3 class="font-semibold mb-1">场景创新</h3>
-                    <p class="text-sm text-gray-600">博物馆/户外等丰富场景</p>
-                </div>
-            </div>
-            
-            <div class="glassmorphism p-6 inline-block mb-8">
-                <p class="text-lg font-medium">已成功匹配 <span class="text-blue-600 font-bold">1000+</span> 师生</p>
-            </div>
-            
-            <div class="flex justify-center gap-4">
-                <a href="#find-teacher" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md">
-                    <i class="fas fa-search mr-2"></i>找老师
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="#parents" class="bg-white hover:bg-gray-100 text-blue-600 font-medium py-3 px-8 rounded-lg transition-colors">
+                    <i class="fas fa-search mr-2"></i>家长找老师
                 </a>
-                <a href="#join-us" class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md">
-                    <i class="fas fa-user-graduate mr-2"></i>成为老师
+                <a href="#teach" class="bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-8 rounded-lg transition-colors">
+                    <i class="fas fa-user-plus mr-2"></i>大学生加入
                 </a>
             </div>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div class="glassmorphism p-8 card-hover">
-                <h2 class="text-2xl font-bold mb-4 flex items-center">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
-                        <i class="fas fa-child"></i>
-                    </div>
-                    学生成长案例
-                </h2>
-                <div class="flex items-center mb-4">
-                    <img src="https://s.coze.cn/image/6Nsx90lrjYQ/" alt="师生互动" class="w-16 h-16 rounded-full object-cover mr-4">
-                    <div>
-                        <h4 class="font-semibold">李明 (10岁)</h4>
-                        <div class="flex flex-wrap mt-1">
-                            <span class="mbti-tag bg-purple-100 text-purple-800">INFP</span>
-                            <span class="mbti-tag bg-blue-100 text-blue-800">机器人</span>
-                            <span class="mbti-tag bg-green-100 text-green-800">科学</span>
+    </section>
+
+    <!-- 核心宣传区域 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">重新定义家教：不只是辅导，而是成长陪伴</h2>
+                <p class="text-xl text-gray-600 mb-12">基于AI与MBTI的智能匹配，结合多场景教学与兴趣激励，为孩子与大学生搭建一个共享成长的桥梁。</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glassmorphism p-6 card-hover">
+                        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mx-auto mb-4">
+                            <i class="fas fa-child text-2xl"></i>
                         </div>
+                        <h3 class="text-xl font-semibold mb-3">小学生成长</h3>
+                        <p class="text-gray-600">个性化学习方案，兴趣引导式教学，全方位能力培养</p>
                     </div>
-                </div>
-                <p class="text-gray-600 mb-4">匹配电子工程专业大学生张华(ENTP)，通过机器人编程项目培养逻辑思维与创造力，6个月后获得市级青少年科技创新大赛二等奖。</p>
-                <div class="flex items-center">
-                    <div class="text-sm text-gray-500 mr-4">
-                        <i class="fas fa-star text-yellow-400 mr-1"></i> 4.9/5.0
-                    </div>
-                    <div class="text-sm text-gray-500">
-                        <i class="fas fa-calendar-alt mr-1"></i> 12节课
-                    </div>
-                </div>
-            </div>
-            
-            <div class="glassmorphism p-8 card-hover">
-                <h2 class="text-2xl font-bold mb-4 flex items-center">
-                    <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    导师成长故事
-                </h2>
-                <div class="flex items-center mb-4">
-                    <img src="https://s.coze.cn/image/hQd437E7tqs/" alt="导师教学" class="w-16 h-16 rounded-full object-cover mr-4">
-                    <div>
-                        <h4 class="font-semibold">王雪 (大三学生)</h4>
-                        <div class="flex flex-wrap mt-1">
-                            <span class="mbti-tag bg-yellow-100 text-yellow-800">ENFJ</span>
-                            <span class="mbti-tag bg-green-100 text-green-800">自然教育</span>
-                            <span class="mbti-tag bg-blue-100 text-blue-800">生物</span>
+                    
+                    <div class="glassmorphism p-6 card-hover">
+                        <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mx-auto mb-4">
+                            <i class="fas fa-user-graduate text-2xl"></i>
                         </div>
-                    </div>
-                </div>
-                <p class="text-gray-600 mb-4">"通过平台找到了5位对自然探索感兴趣的小学生，设计系列户外课程，不仅提升了教学能力，还获得了教育机构实习机会。"</p>
-                <div class="flex items-center">
-                    <div class="text-sm text-gray-500 mr-4">
-                        <i class="fas fa-star text-yellow-400 mr-1"></i> 4.8/5.0
-                    </div>
-                    <div class="text-sm text-gray-500">
-                        <i class="fas fa-users mr-1"></i> 5名学生
+                        <h3 class="text-xl font-semibold mb-3">大学生发展</h3>
+                        <p class="text-gray-600">社会实践机会，教学能力提升，兴趣变现渠道</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 找家教部分 -->
-    <section id="find-teacher" class="container mx-auto py-12 px-4 md:px-8 bg-blue-50">
-        <div class="glassmorphism p-8 mb-12">
-            <h2 class="text-3xl font-bold mb-6 flex items-center">
-                <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-4 shadow-glow">
-                    <i class="fas fa-chalkboard-user"></i>
-                </div>
-                智能匹配优质家教
-            </h2>
+    <!-- 平台亮点区域 -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">我们的平台亮点</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">发布您的需求</h3>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 mb-2">课程类型</label>
-                            <div class="flex flex-wrap gap-2">
-                                <button class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full">学科辅导</button>
-                                <button class="px-4 py-2 bg-orange-100 text-orange-700 rounded-full">兴趣培养</button>
-                                <button class="px-4 py-2 bg-green-100 text-green-700 rounded-full">素质拓展</button>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        
                         <div>
-                            <label class="block text-gray-700 mb-2">年级</label>
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option>小学一年级</option>
-                                <option>小学二年级</option>
-                                <option>小学三年级</option>
-                                <option>小学四年级</option>
-                                <option>小学五年级</option>
-                                <option>小学六年级</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">时间安排</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button class="p-2 bg-gray-100 rounded-lg">周末</button>
-                                <button class="p-2 bg-gray-100 rounded-lg">工作日晚上</button>
-                                <button class="p-2 bg-gray-100 rounded-lg">寒暑假</button>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">MBTI偏好 (可选)</label>
-                            <input type="text" placeholder="如: ENFP" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <h3 class="text-xl font-semibold mb-2">五层漏斗精准匹配机制</h3>
+                            <p class="text-gray-600">学历+MBTI+兴趣+教学风格+时间匹配，确保最佳师生组合</p>
                         </div>
                     </div>
-                    
-                    <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md">
-                        <i class="fas fa-search mr-2"></i> 开始匹配
-                    </button>
                 </div>
                 
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">AI推荐导师</h3>
-                    
-                    <div class="space-y-4">
-                        <div class="glassmorphism p-4 card-hover">
-                            <div class="flex items-center">
-                                <img src="https://s.coze.cn/image/XACZLqfP6Qw/" alt="导师头像" class="w-16 h-16 rounded-full object-cover mr-4">
-                                <div>
-                                    <h4 class="font-semibold">张华</h4>
-                                    <div class="flex items-center mt-1">
-                                        <span class="mbti-tag bg-purple-100 text-purple-800">ENTP</span>
-                                        <span class="text-sm text-gray-500 ml-2">匹配度: 92%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-sm text-gray-600"><i class="fas fa-university mr-2 text-blue-500"></i> 电子工程专业大三</p>
-                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-star mr-2 text-yellow-400"></i> 4.9/5.0 (36评价)</p>
-                            </div>
-                            <div class="flex flex-wrap mt-3 gap-1">
-                                <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">机器人编程</span>
-                                <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">科学实验</span>
-                                <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">逻辑思维</span>
-                            </div>
-                            <button class="mt-3 w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-4 rounded-lg transition-colors">
-                                查看详情
-                            </button>
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        
-                        <div class="glassmorphism p-4 card-hover">
-                            <div class="flex items-center">
-                                <img src="https://s.coze.cn/image/MdZXEFeQcaY/" alt="导师头像" class="w-16 h-16 rounded-full object-cover mr-4">
-                                <div>
-                                    <h4 class="font-semibold">李婷</h4>
-                                    <div class="flex items-center mt-1">
-                                        <span class="mbti-tag bg-green-100 text-green-800">ISFJ</span>
-                                        <span class="text-sm text-gray-500 ml-2">匹配度: 88%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-sm text-gray-600"><i class="fas fa-university mr-2 text-blue-500"></i> 教育学专业大四</p>
-                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-star mr-2 text-yellow-400"></i> 4.8/5.0 (24评价)</p>
-                            </div>
-                            <div class="flex flex-wrap mt-3 gap-1">
-                                <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">阅读写作</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">情绪管理</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">学习方法</span>
-                            </div>
-                            <button class="mt-3 w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-4 rounded-lg transition-colors">
-                                查看详情
-                            </button>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">多场景教学</h3>
+                            <p class="text-gray-600">图书馆、科技馆、展会、自然实践，丰富学习体验</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="mt-8">
-                <h3 class="text-xl font-semibold mb-4">五层筛选漏斗</h3>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mx-auto mb-2">
-                            <i class="fas fa-graduation-cap"></i>
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        <p class="font-medium">学历与专业</p>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">实时课程反馈</h3>
+                            <p class="text-gray-600">家长可实时查看课程反馈与成长报告，掌握学习进度</p>
+                        </div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mx-auto mb-2">
-                            <i class="fas fa-clipboard-check"></i>
+                </div>
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        <p class="font-medium">教学能力</p>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">学生成长仪表盘</h3>
+                            <p class="text-gray-600">学习激励系统，可视化成长轨迹，激发学习动力</p>
+                        </div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mx-auto mb-2">
-                            <i class="fas fa-brain"></i>
+                </div>
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        <p class="font-medium">MBTI匹配</p>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">大学生成长支持</h3>
+                            <p class="text-gray-600">实现兴趣变现与社会实践，积累教学经验</p>
+                        </div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mx-auto mb-2">
-                            <i class="fas fa-tags"></i>
+                </div>
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 mt-1">
+                            <i class="fas fa-check"></i>
                         </div>
-                        <p class="font-medium">兴趣标签</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm text-center">
-                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 mx-auto mb-2">
-                            <i class="fas fa-star"></i>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">MBTI智能匹配</h3>
+                            <p class="text-gray-600">基于人格类型的师生匹配，提升教学效果与学习体验</p>
                         </div>
-                        <p class="font-medium">评价口碑</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 加入我们部分 -->
-    <section id="join-us" class="container mx-auto py-12 px-4 md:px-8">
-        <div class="glassmorphism p-8 mb-12">
-            <h2 class="text-3xl font-bold mb-6 flex items-center">
-                <div class="w-12 h-12 rounded-full bg-gradient-secondary flex items-center justify-center text-white mr-4 shadow-glow">
-                    <i class="fas fa-user-graduate"></i>
+    <!-- MBTI匹配逻辑 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">
+                <i class="fas fa-brain mr-2 text-blue-600"></i>MBTI匹配逻辑
+            </h2>
+            
+            <div class="glassmorphism p-8 mb-12">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-semibold mb-4">INTP老师擅长逻辑引导，适合需要深度思考的ISTJ学生</h3>
+                        <p class="text-gray-600 mb-6">
+                            我们的匹配算法综合考虑MBTI类型契合度、科目需求匹配度和时间匹配度，生成0-100分的综合匹配分，为您推荐最适合的家教或学生。
+                        </p>
+                        <div class="flex items-center">
+                            <div class="mbti-tag mbti-color-INTP">INTP</div>
+                            <i class="fas fa-arrow-right mx-4 text-gray-400"></i>
+                            <div class="mbti-tag mbti-color-ISTJ">ISTJ</div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-100 rounded-xl p-6">
+                            <div class="flex justify-between mb-4">
+                                <span class="text-sm font-medium text-gray-500">匹配度</span>
+                                <span class="text-sm font-bold text-blue-600">92%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 92%"></div>
+                            </div>
+                            <div class="mt-6 grid grid-cols-3 gap-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-xs text-blue-600 mb-1">MBTI契合</div>
+                                    <div class="font-bold">95%</div>
+                                </div>
+                                <div class="bg-amber-50 p-3 rounded-lg">
+                                    <div class="text-xs text-amber-600 mb-1">科目匹配</div>
+                                    <div class="font-bold">90%</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="text-xs text-green-600 mb-1">时间匹配</div>
+                                    <div class="font-bold">88%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                成为万象摆渡人
+            </div>
+        </div>
+    </section>
+
+    <!-- 家长入口 -->
+    <section id="parents" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">
+                <i class="fas fa-user-friends mr-2 text-blue-600"></i>家长入口
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">申请流程</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">1</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">基础资料</h4>
-                                <p class="text-gray-600 text-sm">学历认证、专业技能、教学经历</p>
-                            </div>
+                <div class="glassmorphism p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                            <i class="fas fa-search text-xl"></i>
                         </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">2</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">能力证明</h4>
-                                <p class="text-gray-600 text-sm">上传3分钟教学试讲视频</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">3</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">性格评估</h4>
-                                <p class="text-gray-600 text-sm">MBTI测试与教学风格问卷</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">4</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">审核认证</h4>
-                                <p class="text-gray-600 text-sm">1-3个工作日内完成审核</p>
-                            </div>
-                        </div>
+                        <h3 class="text-2xl font-semibold">寻找合适家教</h3>
                     </div>
-                    
-                    <button class="mt-8 w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md">
-                        <i class="fas fa-pen mr-2"></i> 立即申请
-                    </button>
+                    <p class="text-gray-600 mb-6">
+                        通过我们的智能匹配系统，找到最适合您孩子性格和学习需求的大学生家教。MBTI匹配确保教学风格与学习方式的最佳契合。
+                    </p>
+                    <a href="#find-teacher" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-search mr-2"></i>开始寻找
+                    </a>
                 </div>
                 
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">导师权益</h3>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                <i class="fas fa-bolt text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">智能派单</h4>
-                                <p class="text-gray-600 text-sm">系统推送匹配度高的需求，节省寻找学生时间</p>
-                            </div>
+                <div class="glassmorphism p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                            <i class="fas fa-chart-line text-xl"></i>
                         </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                <i class="fas fa-calendar-alt text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">日程管理</h4>
-                                <p class="text-gray-600 text-sm">课程日历与时间冲突提醒，合理安排教学计划</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                <i class="fas fa-chart-line text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">教学档案</h4>
-                                <p class="text-gray-600 text-sm">学生成长记录、家长评价与教学案例库</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                <i class="fas fa-coins text-xs"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">灵活报酬</h4>
-                                <p class="text-gray-600 text-sm">课时费透明，支持多种结算方式</p>
-                            </div>
-                        </div>
+                        <h3 class="text-2xl font-semibold">学习进度跟踪</h3>
                     </div>
-                    
-                    <div class="mt-6">
-                        <h4 class="font-medium mb-2">MBTI教学案例</h4>
-                        <div class="bg-blue-50 p-3 rounded-lg">
-                            <p class="text-sm text-blue-800"><i class="fas fa-quote-left text-blue-400 mr-1"></i> ENFP导师如何引导ISTJ学生: 通过游戏化方式培养结构化思维，同时保留创造力</p>
-                        </div>
-                    </div>
+                    <p class="text-gray-600 mb-6">
+                        实时查看课程反馈与成长报告，了解孩子的学习进度和成长轨迹。我们的仪表盘让您一目了然掌握学习情况。
+                    </p>
+                    <a href="#progress" class="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i>查看示例
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 学生成长中心 -->
-    <section id="student-center" class="container mx-auto py-12 px-4 md:px-8 bg-gray-50">
-        <div class="glassmorphism p-8 mb-12">
-            <h2 class="text-3xl font-bold mb-6 flex items-center">
-                <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-4 shadow-glow">
-                    <i class="fas fa-star"></i>
-                </div>
-                学生成长中心
+    <!-- 学生入口 -->
+    <section id="students" class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">
+                <i class="fas fa-user-graduate mr-2 text-blue-600"></i>学生入口
             </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="glassmorphism p-6 card-hover">
-                    <h3 class="font-semibold mb-3 flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-2">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        智能课程表
-                    </h3>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">周六 9:00</span>
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">机器人编程</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">周日 14:00</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">自然探索</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism p-6 card-hover">
-                    <h3 class="font-semibold mb-3 flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-2">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
-                        能力发展
-                    </h3>
-                    <div class="radar-chart-container">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="glassmorphism p-6 card-hover">
-                    <h3 class="font-semibold mb-3 flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-2">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        成就勋章
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                            <i class="fas fa-book"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">月度成长报告</h3>
-                    <div class="glassmorphism p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h4 class="font-medium">2024年5月</h4>
-                            <button class="text-blue-600 text-sm flex items-center">
-                                <i class="fas fa-share-alt mr-1"></i> 分享
-                            </button>
+                <div class="glassmorphism p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                            <i class="fas fa-book-open text-xl"></i>
                         </div>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <p class="text-sm text-gray-500 mb-1">学科能力</p>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 75%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <p class="text-sm text-gray-500 mb-1">兴趣发展</p>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-600 h-2 rounded-full" style="width: 90%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <p class="text-sm text-gray-500 mb-1">社交技能</p>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-purple-600 h-2 rounded-full" style="width: 65%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6">
-                            <h5 class="font-medium mb-2">导师评语</h5>
-                            <p class="text-sm text-gray-600">"李明在机器人编程方面展现出极强的学习能力，团队合作意识也有明显提升，建议下一步加强表达能力的训练。"</p>
-                        </div>
+                        <h3 class="text-2xl font-semibold">学习计划</h3>
                     </div>
+                    <p class="text-gray-600 mb-6">
+                        根据您的MBTI类型和学习习惯，为您定制个性化的学习计划。多场景教学让学习变得更有趣、更有效。
+                    </p>
+                    <a href="#study-plan" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-book-open mr-2"></i>查看计划
+                    </a>
                 </div>
                 
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">学习路径规划</h3>
-                    <div class="glassmorphism p-6 h-full">
-                        <div class="flex items-start mb-4">
-                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">基础机器人编程</h4>
-                                <p class="text-sm text-gray-600">已完成 (2024.03)</p>
-                            </div>
+                <div class="glassmorphism p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                            <i class="fas fa-gamepad text-xl"></i>
                         </div>
-                        
-                        <div class="flex items-start mb-4">
-                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">2</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">中级机器人编程</h4>
-                                <p class="text-sm text-gray-600">进行中 (预计2024.07完成)</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start mb-4">
-                            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">3</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">机器人竞赛准备</h4>
-                                <p class="text-sm text-gray-600">计划中</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 mr-3 mt-1 flex-shrink-0">
-                                <span class="font-medium">4</span>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">人工智能基础</h4>
-                                <p class="text-sm text-gray-600">计划中</p>
-                            </div>
-                        </div>
+                        <h3 class="text-2xl font-semibold">激励系统</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        通过游戏化学习激励系统，让学习变得更有动力。完成任务、获得成就，解锁更多有趣的学习内容。
+                    </p>
+                    <a href="#motivation" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>了解详情
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成为家教 -->
+    <section id="teach" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">
+                <i class="fas fa-chalkboard-teacher mr-2 text-blue-600"></i>成为家教
+            </h2>
+            
+            <div class="glassmorphism p-8 max-w-3xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-semibold mb-4">大学生家教注册</h3>
+                        <p class="text-gray-600 mb-6">
+                            加入万象摆渡人平台，将您的知识和兴趣转化为教学实践。获得报酬的同时，积累宝贵的教学经验和社会实践经历。
+                        </p>
+                        <ul class="space-y-4 text-gray-600 mb-6">
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span>MBTI认证与教学风格分析</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span>教学资质与经验验证</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span>优先获得精准订单</span>
+                            </li>
+                        </ul>
+                        <a href="#register-teacher" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                            <i class="fas fa-user-plus mr-2"></i>立即注册
+                        </a>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="https://s.coze.cn/image/VfIzjVrmi24/" alt="大学生家教教学场景" class="w-full rounded-xl shadow-lg">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 教学活动 -->
-    <section id="activities" class="container mx-auto py-12 px-4 md:px-8">
-        <div class="glassmorphism p-8">
-            <h2 class="text-3xl font-bold mb-6 flex items-center">
-                <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-4 shadow-glow">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                特色教学活动
+    <!-- 社区互动 -->
+    <section id="community" class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="text-3xl font-bold mb-12 text-center">
+                <i class="fas fa-users mr-2 text-blue-600"></i>社区互动
             </h2>
             
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4">场景分类</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <button class="p-4 bg-blue-50 rounded-lg flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
-                            <i class="fas fa-landmark"></i>
-                        </div>
-                        <span>场馆教学</span>
-                    </button>
-                    <button class="p-4 bg-green-50 rounded-lg flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
-                            <i class="fas fa-tree"></i>
-                        </div>
-                        <span>自然实践</span>
-                    </button>
-                    <button class="p-4 bg-purple-50 rounded-lg flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <span>文化体验</span>
-                    </button>
+            <div class="glassmorphism p-6 mb-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">今日328人分享学习经验</h3>
+                        <p class="text-gray-600">加入社区，与志同道合的师生交流MBTI教学与学习心得</p>
+                    </div>
+                    <a href="#community" class="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-comments mr-2"></i>进入社区
+                    </a>
                 </div>
             </div>
             
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold mb-4">活动日历</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="py-3 px-4 text-left">日期</th>
-                                <th class="py-3 px-4 text-left">活动</th>
-                                <th class="py-3 px-4 text-left">地点</th>
-                                <th class="py-3 px-4 text-left">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <tr>
-                                <td class="py-3 px-4">6月15日</td>
-                                <td class="py-3 px-4">
-                                    <div class="font-medium">科技馆机器人探索</div>
-                                    <div class="text-sm text-gray-500">适合8-12岁</div>
-                                </td>
-                                <td class="py-3 px-4">市科技馆</td>
-                                <td class="py-3 px-4">
-                                    <button class="text-blue-600 text-sm">详情</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">6月22日</td>
-                                <td class="py-3 px-4">
-                                    <div class="font-medium">植物园自然观察</div>
-                                    <div class="text-sm text-gray-500">适合6-10岁</div>
-                                </td>
-                                <td class="py-3 px-4">市植物园</td>
-                                <td class="py-3 px-4">
-                                    <button class="text-blue-600 text-sm">详情</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">6月29日</td>
-                                <td class="py-3 px-4">
-                                    <div class="font-medium">非遗剪纸工作坊</div>
-                                    <div class="text-sm text-gray-500">适合7-12岁</div>
-                                </td>
-                                <td class="py-3 px-4">文化中心</td>
-                                <td class="py-3 px-4">
-                                    <button class="text-blue-600 text-sm">详情</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="mbti-tag mbti-color-INFJ">INFJ</div>
+                        <span class="text-sm text-gray-500 ml-auto">2小时前</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">如何与ENTP学生建立有效沟通</h3>
+                    <p class="text-gray-600 mb-4">分享我作为INFJ教师与ENTP学生互动的经验...</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-heart text-red-500 mr-1"></i> 42</span>
+                        <span><i class="fas fa-comment text-blue-500 mr-1"></i> 8</span>
+                        <span><i class="fas fa-bookmark text-amber-500 mr-1"></i> 收藏</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div>
-                <h3 class="text-xl font-semibold mb-4">往期精彩回顾</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <img src="https://s.coze.cn/image/roMSlqf1S6c/" alt="活动照片" class="w-full h-32 object-cover rounded-lg">
-                    <img src="https://s.coze.cn/image/M1eNo0O0uMU/" alt="活动照片" class="w-full h-32 object-cover rounded-lg">
-                    <img src="https://s.coze.cn/image/UcbsvXOY34M/" alt="活动照片" class="w-full h-32 object-cover rounded-lg">
-                    <img src="https://s.coze.cn/image/apJgGWGviKk/" alt="活动照片" class="w-full h-32 object-cover rounded-lg">
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="mbti-tag mbti-color-ISTJ">ISTJ</div>
+                        <span class="text-sm text-gray-500 ml-auto">5小时前</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">ISTJ学生如何高效学习数学</h3>
+                    <p class="text-gray-600 mb-4">作为ISTJ类型，我发现这些方法特别适合我...</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-heart text-red-500 mr-1"></i> 28</span>
+                        <span><i class="fas fa-comment text-blue-500 mr-1"></i> 5</span>
+                        <span><i class="fas fa-bookmark text-amber-500 mr-1"></i> 收藏</span>
+                    </div>
+                </div>
+                
+                <div class="glassmorphism p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="mbti-tag mbti-color-ENFP">ENFP</div>
+                        <span class="text-sm text-gray-500 ml-auto">1天前</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">MBTI师生配对分享会回顾</h3>
+                    <p class="text-gray-600 mb-4">上周的分享会上，我们讨论了不同MBTI组合...</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-heart text-red-500 mr-1"></i> 65</span>
+                        <span><i class="fas fa-comment text-blue-500 mr-1"></i> 12</span>
+                        <span><i class="fas fa-bookmark text-amber-500 mr-1"></i> 收藏</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-gray-100 py-12 mt-16">
+    <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
-                    <p class="text-gray-600 mb-4">万象摆渡人是专注于素质教育的智能家教平台，连接大学生导师与小学生，实现双向成长。</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-600 hover:text-blue-600"><i class="fab fa-weixin"></i></a>
-                        <a href="#" class="text-gray-600 hover:text-blue-600"><i class="fab fa-weibo"></i></a>
-                        <a href="#" class="text-gray-600 hover:text-blue-600"><i class="fab fa-zhihu"></i></a>
-                    </div>
+                    <h3 class="text-xl font-bold mb-4">万象摆渡人</h3>
+                    <p class="text-gray-400">大学生与小学生的双向成长平台</p>
                 </div>
-                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <h4 class="font-semibold mb-4">快速链接</h4>
                     <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-600 hover:text-blue-600">首页</a></li>
-                        <li><a href="#find-teacher" class="text-gray-600 hover:text-blue-600">找家教</a></li>
-                        <li><a href="#join-us" class="text-gray-600 hover:text-blue-600">加入我们</a></li>
-                        <li><a href="#student-center" class="text-gray-600 hover:text-blue-600">学生成长</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">平台特色</a></li>
+                        <li><a href="#parents" class="text-gray-400 hover:text-white transition-colors">家长入口</a></li>
+                        <li><a href="#students" class="text-gray-400 hover:text-white transition-colors">学生入口</a></li>
+                        <li><a href="#teach" class="text-gray-400 hover:text-white transition-colors">成为家教</a></li>
                     </ul>
                 </div>
-                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <h4 class="font-semibold mb-4">关于我们</h4>
                     <ul class="space-y-2">
-                        <li class="flex items-center text-gray-600">
-                            <i class="fas fa-phone mr-2 text-blue-500"></i> 400-123-4567
-                        </li>
-                        <li class="flex items-center text-gray-600">
-                            <i class="fas fa-envelope mr-2 text-blue-500"></i> contact@wanxiang.com
-                        </li>
-                        <li class="flex items-center text-gray-600">
-                            <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i> 北京市海淀区中关村
-                        </li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">团队介绍</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                        <li><a href="#privacy" class="text-gray-400 hover:text-white transition-colors">隐私政策</a></li>
+                        <li><a href="#terms" class="text-gray-400 hover:text-white transition-colors">服务条款</a></li>
                     </ul>
                 </div>
-                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">关注我们</h3>
-                    <img src="https://s.coze.cn/image/oZyyJ74jWac/" alt="微信公众号" class="w-32 h-32 object-cover">
+                    <h4 class="font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2"></i> contact@wanxiangbaiduren.com</li>
+                        <li class="flex items-center"><i class="fas fa-phone-alt mr-2"></i> 400-123-4567</li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> 北京市海淀区中关村</li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
-                <p>created by <a href="https://space.coze.cn" class="text-blue-600 hover:underline">coze space</a></p>
-                <p class="mt-1">页面内容均由 AI 生成，仅供参考</p>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+                <p>© 2024 万象摆渡人平台. 保留所有权利.</p>
+                <p class="mt-2">页面内容均由 AI 生成，仅供参考</p>
+                <p class="mt-2">created by <a href="https://space.coze.cn" class="text-blue-400 hover:text-blue-300">coze space</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        // 移动端菜单切换
         document.addEventListener('DOMContentLoaded', function() {
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // 点击导航链接后关闭移动端菜单
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        if (mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                            // 同时切换图标回汉堡按钮
+                            const menuIcon = document.querySelector('#mobileMenuButton i');
+                            menuIcon.classList.remove('fa-times');
+                            menuIcon.classList.add('fa-bars');
+                        }
+                    }
+                });
+            });
+            
+            // 移动端导航菜单切换
             const menuButton = document.getElementById('mobileMenuButton');
             const mobileMenu = document.getElementById('mobileMenu');
-
+            
             menuButton.addEventListener('click', function() {
                 mobileMenu.classList.toggle('active');
                 
+                // 切换图标
                 const icon = this.querySelector('i');
                 if (mobileMenu.classList.contains('active')) {
                     icon.classList.remove('fa-bars');
@@ -851,60 +599,16 @@
                     icon.classList.add('fa-bars');
                 }
             });
-
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-
-                    // 点击导航链接后关闭移动端菜单
-                    if (mobileMenu.classList.contains('active')) {
-                        mobileMenu.classList.remove('active');
-                        const icon = menuButton.querySelector('i');
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                });
-            });
-
-            // 雷达图
-            const radarCtx = document.getElementById('radarChart').getContext('2d');
-            new Chart(radarCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['逻辑思维', '创造力', '社交能力', '表达能力', '动手能力', '专注力'],
-                    datasets: [{
-                        label: '当前能力',
-                        data: [75, 85, 65, 60, 80, 70],
-                        backgroundColor: 'rgba(30, 136, 229, 0.2)',
-                        borderColor: 'rgba(30, 136, 229, 1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: 'rgba(30, 136, 229, 1)',
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: true
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100,
-                            ticks: {
-                                stepSize: 20
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+            
+            // 点击页面其他区域关闭移动端菜单
+            document.addEventListener('click', function(event) {
+                const isClickInsideNav = document.querySelector('nav').contains(event.target);
+                
+                if (!isClickInsideNav && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    const icon = menuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             });
         });
