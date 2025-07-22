@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万象摆渡人 - 找家教平台</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E88E5',      // 深蓝色
+                        secondary: '#E6F2FF',    // 浅蓝色背景
+                        accent1: '#CCE5FF',      // 浅蓝色阴影/边框
+                        accent2: '#B3D1FF',      // 浅蓝色线条/标签
+                        darkgray: '#4A5568',     // 深灰色文本
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-bg {
+                transition: background-color 0.3s ease;
+            }
+            .transition-color {
+                transition: color 0.3s ease;
+            }
+            .transition-all-custom {
+                transition: all 0.3s ease;
+            }
+            .card-shadow {
+                box-shadow: 0 4px 12px rgba(204, 229, 255, 0.5);
+            }
+        }
+    </style>
+    
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .navbar {
+            background-color: #E6F2FF;
+            border-bottom: 2px solid #1E88E5;
+        }
+        
+        .form-card {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(204, 229, 255, 0.5);
+        }
+        
+        .custom-checkbox input[type="checkbox"],
+        .custom-radio input[type="radio"] {
+            display: none;
+        }
+        
+        .custom-checkbox label,
+        .custom-radio label {
+            position: relative;
+            padding-left: 24px;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox label::before,
+        .custom-radio label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-radio label::before {
+            border-radius: 50%;
+        }
+        
+        .custom-checkbox input[type="checkbox"]:checked + label::before,
+        .custom-radio input[type="radio"]:checked + label::before {
+            border-color: #1E88E5;
+            background-color: #1E88E5;
+        }
+        
+        .custom-checkbox input[type="checkbox"]:checked + label::after {
+            content: '✓';
+            position: absolute;
+            left: 3px;
+            top: 0;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .custom-radio input[type="radio"]:checked + label::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(179, 209, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-panel {
+            background-color: white;
+            border: 1px solid #CCE5FF;
+        }
+        
+        .filter-header {
+            background-color: #E6F2FF;
+            color: #1E88E5;
+        }
+        
+        .tag {
+            background-color: #E6F2FF;
+            color: #1E88E5;
+            border-radius: 16px;
+            padding: 2px 10px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        
+        .tag.selected {
+            background-color: #1E88E5;
+            color: white;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #E6F2FF;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-value {
+            height: 100%;
+            background-color: #1E88E5;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 顶部导航栏 -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- 左侧Logo -->
+            <div class="flex items-center">
+                <div class="text-primary text-2xl font-bold flex items-center">
+                    <i class="fas fa-ship mr-2"></i>
+                    <span>万象摆渡人</span>
+                </div>
+            </div>
+            
+            <!-- 中间导航菜单 - 仅在中等及以上屏幕显示 -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-primary font-medium hover:underline">找家教</a>
+                <a href="#" class="text-primary font-medium hover:underline">我的订单</a>
+                <a href="#" class="text-primary font-medium hover:underline">消息中心</a>
+                <a href="#" class="text-primary font-medium hover:underline">帮助中心</a>
+            </div>
+            
+            <!-- 右侧用户区域 -->
+            <div class="relative">
+                <button id="userMenuBtn" class="flex items-center focus:outline-none">
+                    <img src="https://via.placeholder.com/40" alt="用户头像" class="w-10 h-10 rounded-full object-cover border-2 border-primary">
+                    <i class="fas fa-chevron-down ml-1 text-xs text-primary"></i>
+                </button>
+                
+                <!-- 用户下拉菜单 -->
+                <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-accent1">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary hover:text-primary">个人信息设置</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary hover:text-primary">账户安全</a>
+                    <div class="border-t border-gray-100"></div>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-secondary hover:text-primary">退出登录</a>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="mobileMenuBtn" class="md:hidden text-primary text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 - 默认隐藏 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-accent1">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#" class="text-primary font-medium py-2 hover:bg-secondary px-3 rounded">找家教</a>
+                <a href="#" class="text-primary font-medium py-2 hover:bg-secondary px-3 rounded">我的订单</a>
+                <a href="#" class="text-primary font-medium py-2 hover:bg-secondary px-3 rounded">消息中心</a>
+                <a href="#" class="text-primary font-medium py-2 hover:bg-secondary px-3 rounded">帮助中心</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="container mx-auto px-4 pt-24 pb-16">
+        <!-- 发布需求表单 -->
+        <section id="publish-demand" class="mb-16 fade-in">
+            <h2 class="text-2xl font-bold text-primary mb-6">发布家教需求</h2>
+            
+            <div class="form-card rounded-xl p-6 md:p-8">
+                <form id="demandForm">
+                    <!-- 基本信息区域 -->
+                    <div class="mb-6 pb-6 border-b border-accent2">
+                        <h3 class="text-lg font-semibold mb-4">基本信息</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">学生姓名</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary focus:ring focus:ring-primary/20 transition-all" placeholder="请输入学生姓名">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">所在年级</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary focus:ring focus:ring-primary/20 transition-all">
+                                    <option value="">请选择年级</option>
+                                    <option value="primary">小学</option>
+                                    <option value="junior">初中</option>
+                                    <option value="senior">高中</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">所在学校</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary focus:ring focus:ring-primary/20 transition-all" placeholder="请输入学校名称">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">联系方式</label>
+                                <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary focus:ring focus:ring-primary/20 transition-all" placeholder="请输入联系电话">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 科目选择区域 -->
+                    <div class="mb-6 pb-6 border-b border-accent2">
+                        <h3 class="text-lg font-semibold mb-4">科目选择</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">主要辅导科目</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary focus:ring focus:ring-primary/20 transition-all">
+                                <option value="">请选择主要科目</option>
+                                <option value="math">数学</option>
+                                <option value="chinese">语文</option>
+                                <option value="english">英语</option>
+                                <option value="physics">物理</option>
+                                <option value="chemistry">化学</option>
+                                <option value="biology">生物</option>
+                                <option value="politics">政治</option>
+                                <option value="history">历史</option>
+                                <option value="geography">地理</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">次要辅导科目 (可多选)</label>
+                            <div class="flex flex-wrap gap-4">
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject1" name="subjects">
+                                    <label for="subject1">数学</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject2" name="subjects">
+                                    <label for="subject2">语文</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject3" name="subjects">
+                                    <label for="subject3">英语</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject4" name="subjects">
+                                    <label for="subject4">物理</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject5" name="subjects">
+                                    <label for="subject5">化学</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject6" name="subjects">
+                                    <label for="subject6">生物</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject7" name="subjects">
+                                    <label for="subject7">政治</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject8" name="subjects">
+                                    <label for="subject8">历史</label>
+                                </div>
+                                <div class="custom-checkbox inline-block mr-4">
+                                    <input type="checkbox" id="subject9" name="subjects">
+                                    <label for="subject9">地理</label>
+                                </div>
+                            </div>
+                            
+                            <!-- 已选科目标签展示区域 -->
+                            <div class="mt-4" id="selectedSubjects">
+                                <!-- 动态生成的已选科目标签将显示在这里 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 时间段设置区域 -->
+                    <div class="mb-6 pb-6 border-b border-accent2">
+                        <h3 class="text-lg font-semibold mb-4">时间段设置</h3>
+                        
+                        <button type="button" id="addTimeSlot" class="mb-4 px-4
