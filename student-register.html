@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学伴 - 大学生家教服务平台</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #333;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .scroll-nav {
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-nav.scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .advantage-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .review-card {
+            transition: all 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip-trigger:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <nav class="scroll-nav fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm py-3 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
+                    <i class="fas fa-chalkboard-teacher text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-lg text-blue-600">学伴</div>
+                    <div class="text-xs text-gray-500">大学生家教服务平台</div>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="nav-link text-gray-700">首页</a>
+                <a href="#" class="nav-link text-gray-700">接单指南</a>
+                <a href="#" class="nav-link text-gray-700">常见问题</a>
+                <a href="#" class="nav-link text-gray-700">客服中心</a>
+                
+                <div class="flex items-center space-x-4 ml-8">
+                    <a href="#" class="text-gray-700 hover:text-blue-600">登录</a>
+                    <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">注册</a>
+                    <a href="#" class="text-xs text-gray-500 hover:text-blue-600">切换至学员端</a>
+                </div>
+            </div>
+            
+            <button class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Banner区 -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 md:px-8 bg-gradient-to-r from-blue-50 to-blue-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">加入学伴，做专业家教</h1>
+                <p class="text-lg text-gray-600 mb-8">用知识传递价值，收获成长与认可</p>
+                <a href="#apply-form" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full text-lg font-medium inline-block transition-colors">立即加入</a>
+                <p class="text-sm text-gray-500 mt-4">已有1000+大学生加入</p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://s.coze.cn/image/nmRHTS6SzBI/" alt="家教场景" class="w-full max-w-md rounded-lg shadow-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- 平台优势区 -->
+    <section class="py-16 px-4 md:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 relative pb-4">
+                选择我们的理由 —— 大学生专属家教平台
+                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-orange-400 rounded-full"></span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="advantage-card bg-white p-6 rounded-xl shadow-md transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">生源稳定</h3>
+                    <p class="text-gray-600 text-sm">精准匹配周边需求，无需自行寻找，接单更高效</p>
+                </div>
+                
+                <div class="advantage-card bg-white p-6 rounded-xl shadow-md transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-4">
+                        <i class="fas fa-money-bill-wave text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">收益透明</h3>
+                    <p class="text-gray-600 text-sm">合理报酬，无额外扣费，结算周期短（周结）</p>
+                </div>
+                
+                <div class="advantage-card bg-white p-6 rounded-xl shadow-md transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-4">
+                        <i class="fas fa-graduation-cap text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">成长支持</h3>
+                    <p class="text-gray-600 text-sm">免费提供教学素材、技巧课程，助力提升能力</p>
+                </div>
+                
+                <div class="advantage-card bg-white p-6 rounded-xl shadow-md transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-4">
+                        <i class="fas fa-calendar-alt text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">时间灵活</h3>
+                    <p class="text-gray-600 text-sm">自主设定接单时间、区域及科目，兼顾学习与实践</p>
+                </div>
+                
+                <div class="advantage-card bg-white p-6 rounded-xl shadow-md transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-4">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">安全保障</h3>
+                    <p class="text-gray-600 text-sm">用户信息真实认证，服务过程全程记录，保障双方权益</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资料提交区 -->
+    <section id="apply-form" class="py-16 px-4 md:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                        <h2 class="text-2xl font-bold mb-2">成为家教，3步即可</h2>
+                        <p class="text-gray-600 mb-6">填写基本信息 → 提交教学视频 → 等待审核</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-medium mb-4 flex items-center">
+                                    <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center mr-2 text-sm">1</span>
+                                    基础信息
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                                        <input type="text" class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">院校</label>
+                                        <input type="text" class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">年级</label>
+                                        <select class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                            <option>大一</option>
+                                            <option>大二</option>
+                                            <option>大三</option>
+                                            <option>大四</option>
+                                            <option>研究生</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">可授科目</label>
+                                        <input type="text" class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="如：高中数学、英语四级等">
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">个人简介</label>
+                                    <textarea class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" rows="3" placeholder="简单介绍你的教学经验、教学风格等"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-medium mb-4 flex items-center">
+                                    <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center mr-2 text-sm">2</span>
+                                    教学视频提交
+                                </h3>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">视频链接</label>
+                                    <div class="flex">
+                                        <input type="text" class="form-input flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none" placeholder="B站、腾讯视频等平台链接">
+                                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r-lg transition-colors">验证</button>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">请上传10分钟左右的试讲视频，展示你的教学能力</p>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-medium text-lg transition-colors">提交申请</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/3">
+                    <div class="bg-blue-50 p-6 md:p-8 rounded-xl h-full">
+                        <h3 class="text-xl font-bold mb-4">完成性格测评，提高匹配精准度</h3>
+                        <p class="text-gray-600 mb-6">通过简单的性格测试，我们可以更好地了解你的教学风格，为你匹配更适合的学生。</p>
+                        
+                        <div class="tooltip-trigger relative">
+                            <button class="w-full bg-white hover:bg-gray-50 text-blue-500 border border-blue-500 py-3 rounded-lg font-medium transition-colors flex items-center justify-center">
+                                开始测评 <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                            <div class="tooltip absolute bottom-full left-0 mb-2 w-64 bg-white p-3 rounded-lg shadow-lg text-sm text-gray-700">
+                                测评约需5-8分钟，完成后可获得"性格匹配"标签，提高学生选择率
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-white rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-medium">提高匹配精准度</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-medium">获得专属标签</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-medium">提升学生选择率</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务记录与评价展示区 -->
+    <section class="py-16 px-4 md:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">教学成果看得见</h2>
+            
+            <div class="mb-12 overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">家教</th>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">科目</th>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">学生年级</th>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">课时</th>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">收入</th>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">评分</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-3 px-4 text-sm">张老师（北大）</td>
+                            <td class="py-3 px-4 text-sm">高中数学</td>
+                            <td class="py-3 px-4 text-sm">高二</td>
+                            <td class="py-3 px-4 text-sm">32节</td>
+                            <td class="py-3 px-4 text-sm">¥5,120</td>
+                            <td class="py-3 px-4 text-sm text-yellow-400">★★★★★</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm">李老师（清华）</td>
+                            <td class="py-3 px-4 text-sm">英语四级</td>
+                            <td class="py-3 px-4 text-sm">大二</td>
+                            <td class="py-3 px-4 text-sm">24节</td>
+                            <td class="py-3 px-4 text-sm">¥3,840</td>
+                            <td class="py-3 px-4 text-sm text-yellow-400">★★★★☆</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm">王老师（复旦）</td>
+                            <td class="py-3 px-4 text-sm">初中物理</td>
+                            <td class="py-3 px-4 text-sm">初三</td>
+                            <td class="py-3 px-4 text-sm">40节</td>
+                            <td class="py-3 px-4 text-sm">¥6,000</td>
+                            <td class="py-3 px-4 text-sm text-yellow-400">★★★★★</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="review-card bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">张同学</div>
+                            <div class="text-yellow-400 text-sm">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"李老师讲解非常清晰，我的数学成绩从70分提升到了95分，非常感谢！"</p>
+                    <div class="text-xs text-gray-400">2023年12月15日</div>
+                </div>
+                
+                <div class="review-card bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">王妈妈</div>
+                            <div class="text-yellow-400 text-sm">★★★★☆</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"张老师很有耐心，孩子很喜欢她的教学方式，英语成绩有明显进步。"</p>
+                    <div class="text-xs text-gray-400">2024年1月5日</div>
+                </div>
+                
+                <div class="review-card bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">刘同学</div>
+                            <div class="text-yellow-400 text-sm">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"王老师的物理课太棒了！把复杂的概念讲得很简单，我终于理解了力学原理。"</p>
+                    <div class="text-xs text-gray-400">2024年2月20日</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部行动区 -->
+    <section class="py-16 px-4 md:px-8 bg-gradient-to-r from-orange-100 to-orange-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">准备好成为家教了吗？</h2>
+            <p class="text-lg text-gray-700 mb-8">加入我们，开启教学之旅！</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#apply-form" class="bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 px-8 py-3 rounded-full font-medium transition-colors">再次填写</a>
+                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full font-medium transition-colors">查看入驻流程</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-12 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white mr-2">
+                        <i class="fas fa-chalkboard-teacher text-xl"></i>
+                    </div>
+                    <div class="font-bold text-lg">学伴</div>
+                </div>
+                <p class="text-gray-400 text-sm mb-4">专注于连接优秀大学生与有需求的学生家庭，打造专业、可靠的家教服务平台。</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-weixin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-weibo"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-qq"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="font-bold text-lg mb-4">联系方式</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-sm"></i> 400-123-4567</li>
+                    <li class="flex items-center"><i class="fas fa-envelope mr-2 text-sm"></i> contact@xueban.com</li>
+                    <li class="flex items-center"><i class="fas fa-qrcode mr-2 text-sm"></i> 学伴官方公众号</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-bold text-lg mb-4">快速链接</h3>
+                <ul class="grid grid-cols-2 gap-2 text-gray-400">
+                    <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">用户协议</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">入驻须知</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">反馈建议</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
+            <p>© 2023 学伴教育 保留所有权利</p>
+            <p class="mt-2">页面内容均由 AI 生成，仅供参考 | created by <a href="https://space.coze.cn" class="text-blue-300 hover:underline">coze space</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动时导航栏样式变化
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.scroll-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // 表单验证
+        document.addEventListener('DOMContentLoaded', function() {
+            const formInputs = document.querySelectorAll('.form-input');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        this.classList.remove('border-red-500');
+                        this.classList.add('border-green-500');
+                    } else {
+                        this.classList.remove('border-green-500');
+                    }
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (this.value.trim() === '' && this.hasAttribute('required')) {
+                        this.classList.add('border-red-500');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
