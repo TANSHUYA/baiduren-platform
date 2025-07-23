@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万象社区 - 万象摆渡人</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .mbti-tag {
+            transition: all 0.2s ease;
+        }
+        .mbti-tag:hover {
+            transform: scale(1.05);
+        }
+        .like-animation {
+            animation: like 0.6s ease;
+        }
+        @keyframes like {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #e2e8f0;
+        }
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .scroll-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #3b82f6;
+            border-radius: 3px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="text-2xl font-bold text-blue-600 mr-10">
+                    <i class="fas fa-route mr-2"></i>万象摆渡人
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-blue-600">平台特色</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600">家长入口</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600">学生入口</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-600">成为家教</a>
+                    <a href="#" class="text-blue-600 font-medium">社区互动</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container mx-auto px-4 py-6 flex flex-col lg:flex-row">
+        <!-- 主内容 -->
+        <div class="w-full lg:w-2/3 lg:pr-6">
+            <!-- 社区头部区域 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="mb-4 md:mb-0">
+                        <h1 class="text-3xl font-bold text-gray-800">万象社区</h1>
+                        <p class="text-gray-600 mt-1">与志同道合的师生交流MBTI教学与学习心得</p>
+                        <p class="text-sm text-gray-500 mt-2"><i class="fas fa-users mr-1"></i> 今日328人分享学习经验</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-3">
+                        <div class="relative">
+                            <input type="text" placeholder="搜索社区内容..." 
+                                   class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center">
+                            <i class="fas fa-plus mr-2"></i> 发布新帖
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分类筛选区 -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-500 mb-2">MBTI类型</h3>
+                    <div class="scroll-container overflow-x-auto pb-2">
+                        <div class="flex space-x-2 w-max">
+                            <button class="mbti-tag bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">INFJ</button>
+                            <button class="mbti-tag bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">ISTJ</button>
+                            <button class="mbti-tag bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">ENFP</button>
+                            <button class="mbti-tag bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">INTJ</button>
+                            <button class="mbti-tag bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">ENTP</button>
+                            <button class="mbti-tag bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">ESFJ</button>
+                            <button class="mbti-tag bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">INTP</button>
+                            <button class="mbti-tag bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">ENTJ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+                    <div class="w-full md:w-1/2">
+                        <label class="text-sm font-medium text-gray-500 mb-1 block">内容分类</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option>全部主题</option>
+                            <option>教学经验</option>
+                            <option>学习心得</option>
+                            <option>MBTI分析</option>
+                            <option>师生互动</option>
+                            <option>资源分享</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <label class="text-sm font-medium text-gray-500 mb-1 block">排序方式</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option>最新发布</option>
+                            <option>热门推荐</option>
+                            <option>最多互动</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 帖子列表区 -->
+            <div class="space-y-4">
+                <!-- 帖子1 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-3">INFJ</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">思考者</span>
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-2">教师</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">2小时前</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">如何帮助INFJ类型学生提高学习效率</h3>
+                    <p class="text-gray-600 mb-4">作为一名INFJ教师，我发现INFJ学生在学习过程中往往需要更多的内在动机和意义感。通过将学习内容与他们关心的社会议题联系起来，可以显著提高他们的学习兴趣和效率...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>128</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>24</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>56</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子2 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium mr-3">INTJ</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">逻辑思维</span>
+                                    <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full ml-2">学生</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">5小时前</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">INTJ学习者的时间管理技巧分享</h3>
+                    <p class="text-gray-600 mb-4">作为INTJ类型的学习者，我发现传统的番茄工作法并不适合我们。我们需要更长的专注时间(90-120分钟)和更彻底的休息。分享我的时间管理方法...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>95</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>18</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>42</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子3 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-3">ENFP</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">创意达人</span>
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-2">教师</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">昨天</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">ENFP学生在课堂上的表现与引导方法</h3>
+                    <p class="text-gray-600 mb-4">ENFP学生往往充满创意和热情，但容易分心。我发现通过小组讨论、角色扮演等互动性强的教学方式能更好地激发他们的学习兴趣。分享几个有效的课堂活动...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>156</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>32</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>78</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子4 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium mr-3">ISTJ</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">细节控</span>
+                                    <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full ml-2">学生</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">昨天</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">ISTJ学习者的笔记整理方法</h3>
+                    <p class="text-gray-600 mb-4">作为ISTJ学习者，我发现系统化的笔记方法能极大提高学习效率。分享我的笔记系统：1. 颜色分类法 2. 时间轴整理法 3. 重点标记法...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>87</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>15</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>39</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子5 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mr-3">ENTP</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">辩论家</span>
+                                    <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-2">教师</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">2天前</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">如何引导ENTP学生深入思考</h3>
+                    <p class="text-gray-600 mb-4">ENTP学生思维敏捷但容易浅尝辄止。我发现通过"苏格拉底式提问"能有效引导他们深入思考。分享几个有效的提问技巧和课堂案例...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>112</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>28</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>63</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 帖子6 -->
+                <div class="bg-white rounded-lg shadow-sm p-6 card-hover fade-in">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center">
+                            <span class="mbti-tag bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium mr-3">ESFJ</span>
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-medium">暖心人</span>
+                                    <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full ml-2">学生</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">3天前</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4 mb-2">ESFJ学习者的团队合作经验</h3>
+                    <p class="text-gray-600 mb-4">作为ESFJ学习者，我发现小组学习能极大提高我的学习效果。分享几个有效的团队学习方法：1. 角色分配法 2. 定期反馈机制 3. 情感支持系统...</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4 text-gray-500">
+                            <button class="flex items-center hover:text-blue-600 transition-colors like-btn">
+                                <i class="far fa-heart mr-1"></i> <span>76</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-comment mr-1"></i> <span>12</span>
+                            </button>
+                            <button class="flex items-center hover:text-blue-600 transition-colors">
+                                <i class="far fa-bookmark mr-1"></i> <span>34</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 侧边栏 - 仅PC端显示 -->
+        <div class="hidden lg:block lg:w-1/3">
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6 sticky top-24">
+                <!-- 用户信息卡片 -->
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                        <i class="fas fa-user text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium">未登录用户</p>
+                        <p class="text-sm text-gray-500">普通会员</p>
+                    </div>
+                </div>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg mb-6 transition-colors">
+                    登录/注册
+                </button>
+
+                <!-- 社区公告 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-bullhorn text-blue-600 mr-2"></i> 社区公告
+                    </h3>
+                    <div class="bg-blue-50 rounded-lg p-3">
+                        <p class="text-sm font-medium text-blue-800 mb-1">【活动】MBTI教学经验分享大赛</p>
+                        <p class="text-xs text-blue-600">分享你的MBTI教学/学习经验，赢取精美礼品！</p>
+                    </div>
+                </div>
+
+                <!-- 热门标签 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-tags text-blue-600 mr-2"></i> 热门标签
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded-full transition-colors">#学习效率</a>
+                        <a href="#" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded-full transition-colors">#教学方法</a>
+                        <a href="#" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded-full transition-colors">#MBTI分析</a>
+                        <a href="#" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded-full transition-colors">#时间管理</a>
+                        <a href="#" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded-full transition-colors">#师生互动</a>
+                    </div>
+                </div>
+
+                <!-- 活跃用户 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-users text-blue-600 mr-2"></i> 活跃用户
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-2">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-sm font-medium">逻辑思维</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-2">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-sm font-medium">思考者</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-2">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-sm font-medium">创意达人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部区域 -->
+    <footer class="bg-white border-t border-gray-200 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-gray-600">© 2023 万象摆渡人 保留所有权利</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">社区规则</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">关于我们</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-blue-600">帮助中心</a>
+                </div>
+                <button class="hidden md:block bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg transition-colors flex items-center">
+                    <i class="fas fa-arrow-up mr-2"></i> 返回顶部
+                </button>
+            </div>
+            <div class="mt-6 text-center text-xs text-gray-500">
+                <p>页面内容均由 AI 生成，仅供参考</p>
+                <p class="mt-1">created by <a href="https://space.coze.cn" class="text-blue-600 hover:underline">coze space</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端返回顶部按钮 -->
+    <button class="fixed bottom-6 right-6 md:hidden bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 点赞动画效果
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const count = this.querySelector('span');
+                
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas', 'text-red-500', 'like-animation');
+                    count.textContent = parseInt(count.textContent) + 1;
+                } else {
+                    icon.classList.remove('fas', 'text-red-500');
+                    icon.classList.add('far');
+                    count.textContent = parseInt(count.textContent) - 1;
+                }
+            });
+        });
+
+        // 返回顶部按钮
+        const backToTopButtons = document.querySelectorAll('[class*="fa-arrow-up"]');
+        backToTopButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 移动端菜单切换
+        const mobileMenuButton = document.querySelector('.md\\:hidden button');
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                // 这里可以添加移动端菜单的显示/隐藏逻辑
+                alert('移动端菜单功能将在完整实现中添加');
+            });
+        }
+    </script>
+</body>
+</html>
