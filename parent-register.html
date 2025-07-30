@@ -189,20 +189,21 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
     <!-- 顶部导航栏 -->
-  <nav class="bg-white shadow-sm sticky top-0 z-50 p-4">
+   <nav class="bg-white shadow-sm sticky top-0 z-50 p-4">
         <div class="container mx-auto flex items-center justify-between">
             <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
                 <i class="fas fa-bridge mr-2"></i>万象摆渡人
-                </div>
             </div>
-            
-            <!-- 中间导航菜单 - 仅在中等及以上屏幕显示 -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="perent-register.html" class="text-primary font-medium hover:underline">找家教</a>
-                <a href="#" class="text-primary font-medium hover:underline">我的订单</a>
-                <a href="#" class="text-primary font-medium hover:underline">消息中心</a>
-                <a href="#" class="text-primary font-medium hover:underline">帮助中心</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-blue-600 hover:text-blue-800 transition-colors">首页</a>
+                <a href="#parents" class="text-gray-600 hover:text-blue-600 transition-colors">家长入口</a>
+                <a href="#students" class="text-gray-600 hover:text-blue-600 transition-colors">学生入口</a>
+                <a href="#teach" class="text-gray-600 hover:text-blue-600 transition-colors">成为家教</a>
+                <a href="#community" class="text-gray-600 hover:text-blue-600 transition-colors">社区互动</a>
             </div>
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
+                <i class="fas fa-bars"></i>
+            </button>
             
             <!-- 右侧用户区域 -->
             <div class="relative">
