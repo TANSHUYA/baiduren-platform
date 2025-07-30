@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个性化学习计划 - 万象摆渡人</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+ <nav class="bg-white shadow-sm sticky top-0 z-50 p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                <i class="fas fa-bridge mr-2"></i>万象摆渡人
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-blue-600 hover:text-blue-800 transition-colors">首页</a>
+                <a href="#parents" class="text-gray-600 hover:text-blue-600 transition-colors">家长入口</a>
+                <a href="#students" class="text-gray-600 hover:text-blue-600 transition-colors">学生入口</a>
+                <a href="#teach" class="text-gray-600 hover:text-blue-600 transition-colors">成为家教</a>
+                <a href="#community" class="text-gray-600 hover:text-blue-600 transition-colors">社区互动</a>
+            </div>
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden bg-blue-700" id="mobileMenu">
+            <div class="container mx-auto px-4 py-2 flex flex-col">
+                <a href="#" class="py-2 hover:text-blue-200 transition">平台特色</a>
+                <a href="#" class="py-2 hover:text-blue-200 transition">家长入口</a>
+                <a href="#" class="py-2 font-semibold underline">学生入口</a>
+                <a href="#" class="py-2 hover:text-blue-200 transition">成为家教</a>
+                <a href="#" class="py-2 hover:text-blue-200 transition">社区互动</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 标题区域 -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">个性化学习计划</h1>
+            <p class="text-lg text-gray-600">根据您的MBTI类型和学习习惯定制</p>
+        </div>
+
+        <!-- MBTI分析卡片 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 fade-in card-hover">
+            <div class="flex flex-col md:flex-row items-start md:items-center">
+                <div class="bg-blue-100 text-blue-800 rounded-full px-6 py-3 text-xl font-bold mb-4 md:mb-0 md:mr-6">
+                    INFP - 调停者
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">您的学习特点分析</h3>
+                    <p class="text-gray-600 mb-4">作为INFP类型的学习者，您具有强烈的内在价值观和创造力，善于理解抽象概念，但在结构化学习环境中可能需要更多支持。</p>
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h4 class="font-medium text-blue-800 mb-2">推荐学习策略</h4>
+                        <ul class="list-disc pl-5 text-gray-700">
+                            <li>将学习内容与个人价值观联系起来</li>
+                            <li>采用创造性学习方法（如思维导图）</li>
+                            <li>设置灵活的学习时间表</li>
+                            <li>寻找安静、舒适的学习环境</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习时间表 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 fade-in" style="animation-delay: 0.2s;">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800">学习时间表</h2>
+                <div class="flex space-x-2">
+                    <button class="bg-blue-600 text-white px-4 py-1 rounded-md text-sm">周视图</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-1 rounded-md text-sm">日视图</button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-3 text-gray-600">时间</th>
+                            <th class="text-center py-3 text-blue-600">周一</th>
+                            <th class="text-center py-3 text-blue-600">周二</th>
+                            <th class="text-center py-3 text-blue-600">周三</th>
+                            <th class="text-center py-3 text-blue-600">周四</th>
+                            <th class="text-center py-3 text-blue-600">周五</th>
+                            <th class="text-center py-3 text-blue-600">周六</th>
+                            <th class="text-center py-3 text-blue-600">周日</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="py-3 text-gray-600">08:00-10:00</td>
+                            <td class="text-center py-3">
+                                <div class="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mx-1">数学</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mx-1">数学</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-blue-100 text-blue-800 rounded px-2 py-1 text-sm mx-1">数学</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3"></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-gray-600">10:00-12:00</td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-green-100 text-green-800 rounded px-2 py-1 text-sm mx-1">英语</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-green-100 text-green-800 rounded px-2 py-1 text-sm mx-1">英语</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-green-100 text-green-800 rounded px-2 py-1 text-sm mx-1">英语</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 text-gray-600">14:00-16:00</td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-orange-100 text-orange-800 rounded px-2 py-1 text-sm mx-1">物理</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3">
+                                <div class="bg-orange-100 text-orange-800 rounded px-2 py-1 text-sm mx-1">物理</div>
+                            </td>
+                            <td class="text-center py-3"></td>
+                            <td class="text-center py-3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 学习目标区域 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 fade-in" style="animation-delay: 0.4s;">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">学习目标进度</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium text-gray-700">数学基础巩固</span>
+                        <span class="text-sm text-blue-600">65% 完成</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-blue-600 h-2.5 rounded-full progress-bar" style="width: 65%"></div>
+                    </div>
+                    <div class="flex justify-between mt-1">
+                        <span class="text-xs text-gray-500">进行中</span>
+                        <span class="text-xs text-gray-500">预计完成: 2024-05-20</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium text-gray-700">英语词汇扩展</span>
+                        <span class="text-sm text-green-600">30% 完成</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-green-500 h-2.5 rounded-full progress-bar" style="width: 30%"></div>
+                    </div>
+                    <div class="flex justify-between mt-1">
+                        <span class="text-xs text-gray-500">进行中</span>
+                        <span class="text-xs text-gray-500">预计完成: 2024-06-15</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium text-gray-700">物理实验理解</span>
+                        <span class="text-sm text-gray-500">未开始</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-300 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between mt-1">
+                        <span class="text-xs text-gray-500">计划开始: 2024-04-15</span>
+                        <span class="text-xs text-gray-500">预计完成: 2024-07-10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐资源区 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 fade-in" style="animation-delay: 0.6s;">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">推荐学习资源</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm card-hover">
+                    <img src="https://s.coze.cn/image/HSruE_dqYZI/" alt="数学资源" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium text-gray-800">数学思维导图应用</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">视频</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">学习如何用思维导图解决复杂数学问题，适合INFP类型学习者。</p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span><i class="far fa-clock mr-1"></i> 45分钟</span>
+                            <span><i class="fas fa-star mr-1 text-yellow-400"></i> 中级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm card-hover">
+                    <img src="https://s.coze.cn/image/UCN9xck8YaM/" alt="英语资源" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium text-gray-800">创造性记忆英语词汇</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">文章</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">通过联想和故事记忆法扩展词汇量，适合视觉型学习者。</p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span><i class="far fa-clock mr-1"></i> 20分钟阅读</span>
+                            <span><i class="fas fa-star mr-1 text-yellow-400"></i> 初级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm card-hover">
+                    <img src="https://s.coze.cn/image/vV4_5wmaG08/" alt="物理资源" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium text-gray-800">物理实验模拟练习</h3>
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">练习</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">通过互动模拟理解物理实验原理，培养实践能力。</p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span><i class="far fa-clock mr-1"></i> 60分钟</span>
+                            <span><i class="fas fa-star mr-1 text-yellow-400"></i> 高级</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div class="text-center fade-in" style="animation-delay: 0.8s;">
+            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>返回学生入口
+            </a>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-100 py-6 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>created by <a href="https://space.coze.cn" class="text-blue-600 hover:underline">coze space</a></p>
+       
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = this.querySelector('i');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>

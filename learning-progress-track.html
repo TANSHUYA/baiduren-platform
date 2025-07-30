@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习进度跟踪示例 - 万象摆渡人</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background-color: #10b981;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+        }
+        .progress-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .progress-ring__circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #10b981;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #10b981;
+            position: absolute;
+            left: 16px;
+            top: 5px;
+        }
+        .table-row:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+     <nav class="bg-white shadow-sm sticky top-0 z-50 p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                <i class="fas fa-bridge mr-2"></i>万象摆渡人
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-blue-600 hover:text-blue-800 transition-colors">首页</a>
+                <a href="#parents" class="text-gray-600 hover:text-blue-600 transition-colors">家长入口</a>
+                <a href="#students" class="text-gray-600 hover:text-blue-600 transition-colors">学生入口</a>
+                <a href="#teach" class="text-gray-600 hover:text-blue-600 transition-colors">成为家教</a>
+                <a href="#community" class="text-gray-600 hover:text-blue-600 transition-colors">社区互动</a>
+            </div>
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+
+    <!-- 页面标题区域 -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">学习进度跟踪示例</h1>
+            <p class="text-lg text-gray-600">实时查看课程反馈与成长报告</p>
+        </div>
+
+        <!-- 学生信息卡片 -->
+        <div class="card p-6 mb-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <img src="https://s.coze.cn/image/VZ_sb-fO_iI/" alt="学生照片" class="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6 border-4 border-blue-100">
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-1">张小明</h2>
+                    <p class="text-gray-600 mb-2">初中二年级 | 当前学习科目: 数学、英语、物理</p>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div class="bg-blue-500 h-4 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">总体学习进度: <span class="font-bold text-blue-600">75%</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习进度仪表盘 -->
+        <div class="card p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">学科进度概览</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 数学 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-ring mb-3">
+                        <canvas id="mathChart" width="100" height="100"></canvas>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">数学</h3>
+                    <p class="text-blue-600 font-bold">85% <i class="fas fa-arrow-up text-green-500 ml-1"></i></p>
+                </div>
+                <!-- 英语 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-ring mb-3">
+                        <canvas id="englishChart" width="100" height="100"></canvas>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">英语</h3>
+                    <p class="text-blue-600 font-bold">70% <i class="fas fa-arrow-up text-green-500 ml-1"></i></p>
+                </div>
+                <!-- 物理 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-ring mb-3">
+                        <canvas id="physicsChart" width="100" height="100"></canvas>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-1">物理</h3>
+                    <p class="text-blue-600 font-bold">65% <i class="fas fa-arrow-down text-red-500 ml-1"></i></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成长报告区域 -->
+        <div class="card p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">学习里程碑</h2>
+            <div class="space-y-8 pl-10 relative">
+                <!-- 时间轴项目1 -->
+                <div class="timeline-item relative pl-10">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold text-green-700">2024-03-15</span>
+                            <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">数学突破</span>
+                        </div>
+                        <p class="text-gray-700">掌握了二次函数图像与性质，在单元测试中获得95分</p>
+                    </div>
+                </div>
+                <!-- 时间轴项目2 -->
+                <div class="timeline-item relative pl-10">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold text-green-700">2024-02-28</span>
+                            <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">英语进步</span>
+                        </div>
+                        <p class="text-gray-700">英语阅读理解能力显著提升，阅读速度提高30%</p>
+                    </div>
+                </div>
+                <!-- 时间轴项目3 -->
+                <div class="timeline-item relative pl-10">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold text-green-700">2024-01-10</span>
+                            <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">物理入门</span>
+                        </div>
+                        <p class="text-gray-700">开始学习物理课程，掌握了基础力学概念</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习记录表格 -->
+        <div class="card p-6 mb-8 overflow-x-auto">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">近期学习记录</h2>
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left text-gray-500 border-b">
+                        <th class="pb-3">日期</th>
+                        <th class="pb-3">科目</th>
+                        <th class="pb-3">时长</th>
+                        <th class="pb-3">进度</th>
+                        <th class="pb-3">老师评价</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row py-4 border-b">
+                        <td class="py-3">2024-03-20</td>
+                        <td class="py-3">数学</td>
+                        <td class="py-3">60分钟</td>
+                        <td class="py-3"><span class="text-blue-600">+5%</span></td>
+                        <td class="py-3 text-gray-600">解题思路清晰，几何证明能力提升明显</td>
+                    </tr>
+                    <tr class="table-row py-4 border-b">
+                        <td class="py-3">2024-03-18</td>
+                        <td class="py-3">英语</td>
+                        <td class="py-3">45分钟</td>
+                        <td class="py-3"><span class="text-blue-600">+3%</span></td>
+                        <td class="py-3 text-gray-600">语法掌握良好，需要加强听力训练</td>
+                    </tr>
+                    <tr class="table-row py-4 border-b">
+                        <td class="py-3">2024-03-15</td>
+                        <td class="py-3">物理</td>
+                        <td class="py-3">50分钟</td>
+                        <td class="py-3"><span class="text-blue-600">+2%</span></td>
+                        <td class="py-3 text-gray-600">对力学概念理解深入，计算需更细心</td>
+                    </tr>
+                    <tr class="table-row py-4 border-b">
+                        <td class="py-3">2024-03-12</td>
+                        <td class="py-3">数学</td>
+                        <td class="py-3">60分钟</td>
+                        <td class="py-3"><span class="text-blue-600">+4%</span></td>
+                        <td class="py-3 text-gray-600">函数应用能力显著提升，继续保持</td>
+                    </tr>
+                    <tr class="table-row py-4">
+                        <td class="py-3">2024-03-10</td>
+                        <td class="py-3">英语</td>
+                        <td class="py-3">45分钟</td>
+                        <td class="py-3"><span class="text-blue-600">+3%</span></td>
+                        <td class="py-3 text-gray-600">词汇量丰富，口语表达流畅</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="index.html" class="btn-primary inline-block px-8 py-3 rounded-full text-lg font-medium shadow-md">
+                <i class="fas fa-arrow-left mr-2"></i>返回家长入口
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 数学图表
+            const mathCtx = document.getElementById('mathChart').getContext('2d');
+            new Chart(mathCtx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [85, 15],
+                        backgroundColor: ['#3b82f6', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    responsive: false,
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+
+            // 英语图表
+            const englishCtx = document.getElementById('englishChart').getContext('2d');
+            new Chart(englishCtx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [70, 30],
+                        backgroundColor: ['#3b82f6', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    responsive: false,
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+
+            // 物理图表
+            const physicsCtx = document.getElementById('physicsChart').getContext('2d');
+            new Chart(physicsCtx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [65, 35],
+                        backgroundColor: ['#3b82f6', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    responsive: false,
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
